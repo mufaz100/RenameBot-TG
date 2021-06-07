@@ -1,7 +1,37 @@
-class script(object):
-    START_TEXT = """ A Simple File Renamer Bot With Permanent Thumbnail support!💯
+import os
+from config import Config
+from .fonts import Fonts
+from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-<b>Send me any Telegram file and choose appropriate option! </b>"""
+
+@Client.on_message(filters.command('start'))
+async def start(c, m):
+    owner = await c.get_users(int(Config.OWNER_ID))
+    owner_username = owner.username if owner.username else 'Ns_bot_updates'
+
+    # start text
+    text = f"""Hey! {m.from_user.mention(style='md')},
+
+💡 ** I am Stylish Font Bot**
+
+`I can help you to get stylish fonts. Just send me some text and see magic.`
+
+**👲 Maintained By:** [ᴍʜᴅ ᴍᴜꜰᴀᴢ](https://t.me/mufaz123)
+"""
+
+    # Buttons
+    buttons = [
+        [
+            InlineKeyboardButton('🤖 Bot Updates', url=f"https://t.me/Bx_Botz")
+        ]
+    ]
+    await m.reply_text(
+        text=text,
+        reply_markup=InlineKeyboardMarkup(buttons)
+    )
+
+
 
     RENAME_403_ERR = "What Are You Doing? You are Banned"
     UPGRADE_TEXT = "CONTACT @mufaz123"
